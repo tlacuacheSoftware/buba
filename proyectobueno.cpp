@@ -25,6 +25,7 @@ public:
     string getTipoCliente ( void );
     string getHoraLlegada ( void );
     string getTiempoOp ( void );
+    string toString(void);
     cliente(int id, string tipo, string hora, string tiemOp);
     cliente( void );
 
@@ -63,7 +64,14 @@ cliente::cliente( int id, string tipo, string hora, string tiemOp)
     horaLlegada = hora;
     tiempoOperacion = tiemOp;
 }
- 
+string toString(void)
+{
+
+   //string a =
+return "" ;
+
+}
+
 /*
 * @return id del cleinte
 */
@@ -114,6 +122,7 @@ public:
     int tam ( void );
     cajero (int id, int tiempoEspera);
     list<cliente> getListaPersonas( void );
+    void crearArchivo(); 
     
 
 /*
@@ -127,10 +136,40 @@ private:
 };
 
 /*
+*
+* creacion de el archivo con todos los elemtnos de la lista
+*/
+
+void cajero::crearArchivo()
+{
+  string nombreArchivo = "cajero"+to_string(getId())+".txt";
+
+  ofstream escribir (nombreArchivo); // se crear archivo
+  // recorrer la lista y escribir
+  
+
+
+  for (std::list<cliente>::iterator it = listaPersonas.begin();  it != listaPersonas.end(); ++it){
+    
+    cliente t = *it;
+    
+    string x = to_string(t.getId())+","+t.getHoraLlegada()+","+t.getTiempoOp()+","+t.getTipoCliente();
+    cout <<x<<endl;
+    escribir <<x<<endl;  
+  }
+  
+
+
+  escribir.close();
+
+
+}
+
+
+/*
 *  contructor de la clase 
 * @param id numero de cajero
 * @param tiempoEspera tiempor que va a tardar un cliente 
-
 */
 cajero::cajero( int id, int tiempoEspera )
 {
@@ -400,8 +439,6 @@ int main(int argc, char **argv) {
     for (int i = 0; i < numCajeros; i++){ 
         cajero ca(i, 0);
         cajeros.push_back(ca);
-        
-        
     }
     /*
     * recorro la lista de clientes 
@@ -413,7 +450,7 @@ int main(int argc, char **argv) {
         cout<< primero.getTipoCliente() <<endl;
     }
     cout<<"tamño cajeros : "<< cajeros.size()<<endl;
-    
+  
   
   return 0;
 }
